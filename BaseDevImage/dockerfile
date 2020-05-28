@@ -1,0 +1,15 @@
+FROM ubuntu:20.04
+
+LABEL version="0.0.1"
+LABEL description="Docker image with all necessary soft for developing"
+
+ENV ROOT_DIR=/usr/root \
+    APP_DIR=apps \
+    INST_DIR=install \
+    DEBIAN_FRONTEND=noninteractive
+
+WORKDIR ${ROOT_DIR}/$INST_DIR
+ADD ./base_install.sh .
+RUN find . -name '*.sh' -exec chmod a+x {} +
+RUN ./base_install.sh
+WORKDIR ${ROOT_DIR}/$APP_DIR
