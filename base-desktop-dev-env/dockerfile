@@ -21,8 +21,8 @@ RUN ./$INST_DIR/xfce_install.sh
 RUN ./$INST_DIR/post_install.sh
 
 ADD ./xfce/ .
-RUN ./$INST_DIR/startup.sh
+#RUN ./$INST_DIR/startup.sh
 #WORKDIR ${ROOT_DIR}/$DEV_DIR
 
-# ENTRYPOINT [${ROOT_DIR}/$INST_DIR/vnc_startup.sh]
-# CMD ["--wait"]
+ENTRYPOINT ["/root/install/startup.sh"]
+CMD ["--wait"]
