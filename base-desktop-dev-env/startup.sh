@@ -1,11 +1,13 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
+
+ apt-get install -y ttf-wqy-zenhei
 ## correct forwarding of shutdown signal
-cleanup () {
-    kill -s SIGTERM $!
-    exit 0
-}
-trap cleanup SIGINT SIGTERM
+# cleanup () {
+#     kill -s SIGTERM $!
+#     exit 0
+# }
+# trap cleanup SIGINT SIGTERM
 
 ## write correct window size to chrome properties
 ./$INST_DIR/chrome-init.sh
@@ -19,10 +21,10 @@ echo -e "\n------------------ change VNC password  ------------------"
 mkdir -p "$ROOT_DIR/.vnc"
 PASSWD_PATH="$ROOT_DIR/.vnc/passwd"
 
-if [[ -f $PASSWD_PATH ]]; then
-    echo -e "\n---------  purging existing VNC password settings  ---------"
-    rm -f $PASSWD_PATH
-fi
+# if [[ -f $PASSWD_PATH ]]; then
+#     echo -e "\n---------  purging existing VNC password settings  ---------"
+#     rm -f $PASSWD_PATH
+# fi
 
 # if [[ $VNC_VIEW_ONLY == "true" ]]; then
 #     echo "start VNC server in VIEW ONLY mode!"
@@ -30,6 +32,8 @@ fi
 #     echo $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 20) | vncpasswd -f > $PASSWD_PATH
 # fi
 echo "$VNC_PW" | vncpasswd -f >> $PASSWD_PATH
+# echo "$VNC_PW"
+# cat $PASSWD_PATH
 chmod 600 $PASSWD_PATH
 
 
@@ -39,15 +43,15 @@ chmod 600 $PASSWD_PATH
 # $NO_VNC_HOME/utils/launch.sh --vnc localhost:$VNC_PORT --listen $NO_VNC_PORT &> $STARTUPDIR/no_vnc_startup.log &
 # PID_SUB=$!
 
-echo -e "\n------------------ start VNC server ------------------------"
-echo "remove old vnc locks to be a reattachable container"
+# echo -e "\n------------------ start VNC server ------------------------"
+# echo "remove old vnc locks to be a reattachable container"
 vncserver -kill $DISPLAY &> ./$INST_DIR/vnc_startup.log \
     || rm -rfv /tmp/.X*-lock /tmp/.X11-unix &> ./$INST_DIR/vnc_startup.log \
     || echo "no locks present"
 
 echo -e "start vncserver with param: VNC_COL_DEPTH=$VNC_COL_DEPTH, VNC_RESOLUTION=$VNC_RESOLUTION\n..."
 if [[ $DEBUG == true ]]; then echo "vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION"; fi
-vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> ./$INST_DIR/no_vnc_startup.log
+vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION
 echo -e "start window manager\n..."
 ./wm_startup.sh &> ./$INST_DIR/wm_startup.log
 

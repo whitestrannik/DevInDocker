@@ -3,8 +3,7 @@ FROM ubuntu:18.04
 LABEL version="0.1.0"
 LABEL description="Docker image with base soft for developing: nano, mc, powershell, git, utils"
 
-ENV ROOT_DIR=/usr/root \
-    APP_DIR=apps \
+ENV ROOT_DIR=/root \
     DEV_DIR=dev \
     INST_DIR=install \
     DEBIAN_FRONTEND=noninteractive
