@@ -3,7 +3,7 @@ set -e
 
 echo "Install common tools and libs"
 apt-get update 
-apt-get install -y nano mc wget net-tools locales bzip2 python-numpy
+apt-get install -y nano mc wget net-tools locales bzip2
 
 
 echo "Install Powershell core"
@@ -14,8 +14,6 @@ apt-get install -y powershell
 
 echo "Install git"
 apt-get install -y git
-
-apt-get clean -y
 
 echo "generate locales en_US.UTF-8"
 locale-gen en_US.UTF-8
