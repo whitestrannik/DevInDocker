@@ -5,11 +5,22 @@ LABEL description="Docker image with all necessary soft for developing"
 
 ENV ROOT_DIR=/usr/root \
     APP_DIR=apps \
+    DEV_DIR=dev \
     INST_DIR=install \
     DEBIAN_FRONTEND=noninteractive
 
-WORKDIR ${ROOT_DIR}/$INST_DIR
-ADD ./base_install.sh .
-RUN find . -name '*.sh' -exec chmod a+x {} +
-RUN ./base_install.sh
-WORKDIR ${ROOT_DIR}/$APP_DIR
+WORKDIR $ROOT_DIR
+RUN mkdir ./$INST_DIR
+ADD ./base_install.sh ./$INST_DIR/
+RUN find ./$INST_DIR/ -name '*.sh' -exec chmod a+x {} +
+
+RUN ./$INST_DIR/base_install.sh
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+RUN ./$INST_DIR/tigervnc_install.sh
+RUN ./$INST_DIR/chrome_install.sh
+RUN ./$INST_DIR/xfce_install.sh
+
+RUN ./$INST_DIR/post_install.sh
+
+WORKDIR ${ROOT_DIR}/$DEV_DIR
