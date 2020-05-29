@@ -3,13 +3,26 @@ FROM base-dev-env:0.1.0
 LABEL version="0.0.1"
 LABEL description="Docker image with base dev environment + xfce, tigervnc, vscode, chrome"
 
+ENV VNC_COL_DEPTH=24 \
+    VNC_RESOLUTION=1280x1024 \
+    VNC_PW=vncpassword \
+    VNC_VIEW_ONLY=false \
+    DISPLAY=:1 \
+    VNC_PORT=5901
+EXPOSE $VNC_PORT
+
 WORKDIR $ROOT_DIR
 ADD ./* ./$INST_DIR/
 RUN find ./$INST_DIR/ -name '*.sh' -exec chmod a+x {} +
 
-RUN ./$INST_DIR/tigervnc_install.sh
-RUN ./$INST_DIR/chrome_install.sh
+#RUN ./$INST_DIR/tigervnc_install.sh
+#RUN ./$INST_DIR/chrome_install.sh
 #RUN ./$INST_DIR/xfce_install.sh
-RUN ./$INST_DIR/post_install.sh
+#RUN ./$INST_DIR/post_install.sh
 
+ADD ./xfce/ .
+RUN ./$INST_DIR/startup.sh
 WORKDIR ${ROOT_DIR}/$DEV_DIR
+
+# ENTRYPOINT [${ROOT_DIR}/$INST_DIR/vnc_startup.sh]
+# CMD ["--wait"]
