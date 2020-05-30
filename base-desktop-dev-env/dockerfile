@@ -1,6 +1,6 @@
 FROM base-dev-env:0.1.0
 
-LABEL version="0.0.4"
+LABEL version="0.1.0"
 LABEL description="Docker image with base dev environment + xfce, tigervnc, vscode, chrome"
 
 ENV VNC_PORT=5901 \

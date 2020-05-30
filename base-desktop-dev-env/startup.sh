@@ -50,6 +50,8 @@ VNC_IP=$(hostname -i)
 echo -e "\n\n------------------ VNC environment started ------------------"
 echo -e "\nVNCSERVER started on VNC_DISPLAY= $VNC_DISPLAY \n\t=> connect via VNC viewer with $VNC_IP:$VNC_PORT"
 
+
+## output logs or last command executing
 if [[ $OUTPUT == true ]]; then
     echo "Showing output:\n"
     tail -f $ROOT_DIR/$INST_DIR/*.log $ROOT_DIR/.vnc/*$VNC_DISPLAY.log
