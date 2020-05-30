@@ -31,23 +31,24 @@ if [[ -f $PASSWD_PATH ]]; then
     rm -f $PASSWD_PATH
 fi
 
-echo "$VNC_PW" | vncpasswd -f >> $PASSWD_PATH
+echo "$VNC_PASSWD" | vncpasswd -f >> $PASSWD_PATH
 chmod 600 $PASSWD_PATH
 
 
 ## start vnc server
 echo -e "\n------------------ start VNC server ------------------------"
-vncserver -kill $DISPLAY &> $ROOT_DIR/$INST_DIR/vnc_startup.log \
+vncserver -kill $VNC_DISPLAY &> $ROOT_DIR/$INST_DIR/vnc_startup.log \
     || rm -rfv /tmp/.X*-lock /tmp/.X11-unix &> $ROOT_DIR/$INST_DIR/vnc_startup.log \
     || echo "no locks present"
 
 echo -e "start vncserver with param: VNC_COL_DEPTH=$VNC_COL_DEPTH, VNC_RESOLUTION=$VNC_RESOLUTION\n..."
-vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION
+vncserver $VNC_DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION
 echo -e "start window manager\n..."
 ./wm_startup.sh &> $ROOT_DIR/$INST_DIR/wm_startup.log
 
 VNC_IP=$(hostname -i)
 echo -e "\n\n------------------ VNC environment started ------------------"
-echo -e "\nVNCSERVER started on DISPLAY= $DISPLAY \n\t=> connect via VNC viewer with $VNC_IP:$VNC_PORT"
+echo -e "\nVNCSERVER started on VNC_DISPLAY= $VNC_DISPLAY \n\t=> connect via VNC viewer with $VNC_IP:$VNC_PORT"
 
-tail -f $ROOT_DIR/$INST_DIR/*.log $ROOT_DIR/.vnc/*$DISPLAY.log
+#tail -f $ROOT_DIR/$INST_DIR/*.log $ROOT_DIR/.vnc/*$VNC_DISPLAY.log
+exec "/bin/bash"
