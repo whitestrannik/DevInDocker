@@ -19,7 +19,7 @@ It's base image for further experiments. It is based on Ubuntu:18.04 and include
 - 0.1.0 Ubuntu 18.04, Git, Powershell, nano, wget, net-tools, locales
 
 
-# Base dev desktop image (base-desktop-dev-env)
+### Base dev desktop image (base-desktop-dev-env)
 Almost all code is borrowed from https://github.com/ConSol/docker-headless-vnc-container. It is based on base-dev-image:0.1.0  and includes Xfce, TigerVnc, Chrome and VS Code
 
 **How to build image:** 
