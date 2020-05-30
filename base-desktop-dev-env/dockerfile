@@ -16,13 +16,11 @@ ADD ./* ./$INST_DIR/
 RUN find ./$INST_DIR/ -name '*.sh' -exec chmod a+x {} +
 
 RUN ./$INST_DIR/tigervnc_install.sh
-#RUN ./$INST_DIR/chrome_install.sh
+RUN ./$INST_DIR/chrome_install.sh
 RUN ./$INST_DIR/xfce_install.sh
 RUN ./$INST_DIR/post_install.sh
 
 ADD ./xfce/ .
-#RUN ./$INST_DIR/startup.sh
-#WORKDIR ${ROOT_DIR}/$DEV_DIR
 
 ENTRYPOINT ["/root/install/startup.sh"]
 CMD ["--wait"]
