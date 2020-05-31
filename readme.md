@@ -30,8 +30,9 @@ It's base image for further experiments. It is based on Ubuntu:18.04 and include
 **How to run container:** 
 > docker run --rm  -it -p 5901:5901 base-desktop-dev-env:0.1.0
 > OR
->docker run --rm  -it -p 5901:5901 -e VNC_RESOLUTION=1920x1080 base-desktop-dev-env:0.1.0
+>docker run --rm  -it -p 5901:5901 -e VNC_RESOLUTION=1920x1080 --shm-size 1g base-desktop-dev-env:0.1.0
 
+**Note**: to prevent Chromium crash it's better to set -shm-size 1g parameter
 **Environment variables:**
 - VNC_PORT (default=5901) - port to connect to VNC server
 - VNC_PASSWD (default=ddockerr7) - default password to connect to VNC server
